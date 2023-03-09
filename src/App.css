@@ -1,42 +1,95 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+* {
+  margin: 0%;
+  padding: 0%;
+}
+.result {
+  color: #252525;
+  border-radius: 10px;
+  padding: 24px;
+  transition: 0.5s;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+  margin: 50px 300px;
+}
+.exam_result {
+  place-items: center;
+  margin-left: 50px;
+}
+.msg {
+  color: #252525;
+}
+.exam_result {
+  color: #252525;
+  margin: 100px;
+}
+.user_name {
+  display: flex;
+  gap: 24px;
+}
+.user_name h2 {
+  color: #000000;
+  font-weight: 500;
+  font-size: 14px;
+}
+.logout {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 8px;
+}
+.logout button {
+  padding: 4px 8px;
+  font-size: 12px;
+  color: #f9f9f9;
+  background-color: #777777;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.logout button:hover {
+  color: #f9f9f9;
+  background-color: #252525;
+}
+th {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #777777;
+  padding-right: 34px;
+  padding-top: 24px;
+}
+td {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #252525;
+  padding-right: 34px;
+  padding-top: 24px;
+  padding-left: 14px;
+}
+.user_detials {
+  display: flex;
+  justify-content: space-between;
+  justify-items: center;
+  align-items: center;
+  gap: 24px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.year_term {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  gap: 8px;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.year_term h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #777777;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.year_term p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #252525;
 }
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.confetti {
+  width: 90%;
+  transition: 0.2s;
 }
