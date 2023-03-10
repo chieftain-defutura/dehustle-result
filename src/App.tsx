@@ -16,9 +16,8 @@ interface IData {
   testName: string;
   subject: {
     subjectName: string;
-    theory: string;
-    practical: string;
-    total: string;
+    theory: number;
+    practical: number;
     havePractical: boolean;
     _id: string;
   }[];
@@ -33,13 +32,7 @@ const App = () => {
     registerNumber: Yup.string().required("Required"),
   });
 
-  const [click, setClick] = useState(false);
-  // const [isClose, setIsClose] = useState(true);
   const [userData, setUserData] = useState<IData | null>(null);
-
-  const ClickEvent = () => {
-    setClick(true);
-  };
 
   const handleSubmit = async (values: any) => {
     try {
@@ -55,7 +48,7 @@ const App = () => {
   return (
     <>
       <div className="exam_result">
-        {click && (
+        {!userData ? (
           <Formik
             initialValues={{
               registerNumber: "",
@@ -65,12 +58,12 @@ const App = () => {
           >
             {({ values, handleChange, handleBlur, touched, errors }) => (
               <Form>
-                <label htmlFor="">Register Number :</label>
-                <Field name="registerNumber" />
+                <div className="student_number">
+                  <label htmlFor="">Register Number :</label>
+                  <Field name="registerNumber" />
 
-                <button onClick={() => ClickEvent()} type="submit">
-                  Submit
-                </button>
+                  <button type="submit">Submit</button>
+                </div>
                 <ErrorMessage
                   name="registerNumber"
                   render={(msg) => (
@@ -82,8 +75,7 @@ const App = () => {
               </Form>
             )}
           </Formik>
-        )}
-        {userData && (
+        ) : (
           <div className="result">
             <div className="logout">
               <div></div>
@@ -110,9 +102,9 @@ const App = () => {
                 </div>
               </div>
             </div>
-            {/* <div className="confetti">
+            <div className="confetti">
               <Confetti />
-            </div> */}
+            </div>
             <div className="subject">
               <table>
                 <tr>
@@ -123,23 +115,39 @@ const App = () => {
                 </tr>
                 {userData.subject.map((f, index) => {
                   return (
-                    <tr key={index}>
-                      <td>{f.subjectName}</td>
-                      <td>
-                        {f.theory}
-                        {f.havePractical ? "+" : ""}
-                        {f.practical}
-                      </td>
-                      <td>{Number(f.theory) + Number(f.practical)}</td>
-                      <td>
-                        {Number(f.theory) + Number(f.practical) > 35
-                          ? "Pass"
-                          : "Fail"}
-                      </td>
-                    </tr>
+                    <>
+                      <tr key={index}>
+                        <td>{f.subjectName}</td>
+                        <td>
+                          {f.theory}
+                          {f.havePractical ? "+" : ""}
+                          {f.practical ? f.practical : ""}
+                        </td>
+                        <td>{Number(f.theory) + Number(f.practical)}</td>
+                        <td>
+                          {Number(f.theory) + Number(f.practical) > 35
+                            ? "Pass"
+                            : "Fail"}
+                        </td>
+                      </tr>
+                    </>
                   );
                 })}
               </table>
+              <div className="totalmark">
+                <h3>TOTAL </h3>
+                <p>
+                  {userData.subject.reduce((acc, b) => {
+                    return acc + b.theory + b.practical;
+                  }, 0)}{" "}
+                  <span>(Four Three Five)</span>
+                </p>
+                {/* <h3>
+                  {userData.subject.every((acc, b) => {
+                    return acc+ b.theory + b.practical > 35 ? "Pass" : "Fail";
+                  })}
+                </h3> */}
+              </div>
             </div>
           </div>
         )}
