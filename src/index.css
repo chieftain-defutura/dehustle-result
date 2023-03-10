@@ -1,5 +1,5 @@
 :root {
-  font-family: "Gilroy-Bold ";
+  font-family: "Gilroy-Bold";
   line-height: 1.5;
   font-weight: 400;
   scroll-behavior: smooth;
@@ -12,7 +12,7 @@
   -webkit-text-size-adjust: 100%;
 }
 @font-face {
-  font-family: "Gilroy-Bold ";
+  font-family: "Gilroy-Bold";
   src: url(./assets/fonts/Gilroy-Bold.ttf);
 }
 @font-face {
@@ -20,35 +20,20 @@
   src: url(./assets/fonts/Gilroy-Light.ttf);
 }
 @font-face {
-  font-family: "Gilroy-Medium ";
+  font-family: "Gilroy-Medium";
   src: url(./assets/fonts/Gilroy-Medium.ttf);
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  overflow: hidden;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+button {
+  border: none;
+  outline: none;
 }

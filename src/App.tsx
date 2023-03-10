@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { baseURL } from "./api";
 import user from "./assets/icons/user.svg";
 import Confetti from "react-confetti";
-
+import { ToWords } from "to-words";
 interface IData {
   _id: string;
   registerNumber: string;
@@ -33,6 +33,7 @@ const App = () => {
   });
 
   const [userData, setUserData] = useState<IData | null>(null);
+  const [word, setWord] = useState("");
 
   const handleSubmit = async (values: any) => {
     try {
@@ -45,6 +46,30 @@ const App = () => {
       console.log(error);
     }
   };
+  // useEffect(() => {
+
+  //     const toWords = new ToWords();
+  //     const word= toWords.convert(words);
+  //     setWord(word)
+  //   }
+  // }, [])
+
+  useEffect(() => {
+    if (!userData) return;
+    const total = userData.subject.reduce((acc, b) => {
+      return acc + b.theory + b.practical;
+    }, 0);
+    console.log(total);
+    const toWords = new ToWords();
+    const word = toWords.convert(total);
+    setWord(word);
+
+    const resu = userData.subject.every((b, acc) =>
+      b.theory + b.practical > 35 ? console.log("Pass") : console.log("Fail")
+    );
+    console.log(resu);
+  }, [userData]);
+
   return (
     <>
       <div className="exam_result">
@@ -59,19 +84,22 @@ const App = () => {
             {({ values, handleChange, handleBlur, touched, errors }) => (
               <Form>
                 <div className="student_number">
-                  <label htmlFor="">Register Number :</label>
-                  <Field name="registerNumber" />
+                  <label htmlFor="">Enter Your Register Number</label>
+                  <Field
+                    name="registerNumber"
+                    placeholder="Enter Your Register Number"
+                  />
+                  <ErrorMessage
+                    name="registerNumber"
+                    render={(msg) => (
+                      <div className="msg">
+                        *No student found with this register number
+                      </div>
+                    )}
+                  />
 
                   <button type="submit">Submit</button>
                 </div>
-                <ErrorMessage
-                  name="registerNumber"
-                  render={(msg) => (
-                    <div className="msg">
-                      No student found with this register number
-                    </div>
-                  )}
-                />
               </Form>
             )}
           </Formik>
@@ -102,9 +130,7 @@ const App = () => {
                 </div>
               </div>
             </div>
-            <div className="confetti">
-              <Confetti />
-            </div>
+
             <div className="subject">
               <table>
                 <tr>
@@ -116,6 +142,15 @@ const App = () => {
                 {userData.subject.map((f, index) => {
                   return (
                     <>
+                      <div className="confetti">
+                        {userData.subject.every(
+                          (b) => b.theory + b.practical > 35
+                        ) ? (
+                          <Confetti />
+                        ) : (
+                          ""
+                        )}
+                      </div>
                       <tr key={index}>
                         <td>{f.subjectName}</td>
                         <td>
@@ -125,9 +160,11 @@ const App = () => {
                         </td>
                         <td>{Number(f.theory) + Number(f.practical)}</td>
                         <td>
-                          {Number(f.theory) + Number(f.practical) > 35
-                            ? "Pass"
-                            : "Fail"}
+                          {Number(f.theory) + Number(f.practical) > 35 ? (
+                            <p id="pass">Pass</p>
+                          ) : (
+                            <p id="fail">Fail</p>
+                          )}
                         </td>
                       </tr>
                     </>
@@ -139,14 +176,14 @@ const App = () => {
                 <p>
                   {userData.subject.reduce((acc, b) => {
                     return acc + b.theory + b.practical;
-                  }, 0)}{" "}
-                  <span>(Four Three Five)</span>
+                  }, 0)}
+                  <span>({word})</span>
                 </p>
-                {/* <h3>
-                  {userData.subject.every((acc, b) => {
-                    return acc+ b.theory + b.practical > 35 ? "Pass" : "Fail";
-                  })}
-                </h3> */}
+                {userData.subject.every((b) => b.theory + b.practical > 35) ? (
+                  <p id="pass">Pass</p>
+                ) : (
+                  <p id="fail">Fail</p>
+                )}
               </div>
             </div>
           </div>
@@ -157,3 +194,6 @@ const App = () => {
 };
 
 export default App;
+function setWord(word: string) {
+  throw new Error("Function not implemented.");
+}
