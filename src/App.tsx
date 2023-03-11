@@ -29,30 +29,32 @@ interface IData {
 
 const App = () => {
   const validate = Yup.object().shape({
-    registerNumber: Yup.string().required("Required"),
+    registerNumber: Yup.string().required("*Please enter your register number"),
   });
 
   const [userData, setUserData] = useState<IData | null>(null);
   const [word, setWord] = useState("");
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (values: any) => {
     try {
-      const { data } = await axios.get(
-        `${baseURL}/result/${values.registerNumber}`
-      );
+      setLoading(true);
+      const { data } = await axios.get(`${baseURL}/result/${values.registerNumber}`);
       console.log(data);
+
+      if (data.error) {
+        return setError(true);
+      }
+
+      setError(false);
       setUserData(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
-  // useEffect(() => {
-
-  //     const toWords = new ToWords();
-  //     const word= toWords.convert(words);
-  //     setWord(word)
-  //   }
-  // }, [])
 
   useEffect(() => {
     if (!userData) return;
@@ -70,6 +72,14 @@ const App = () => {
     console.log(resu);
   }, [userData]);
 
+  useEffect(() => {
+    if (!error) return;
+
+    setTimeout(() => {
+      setError(false);
+    }, 3000);
+  }, [error]);
+
   return (
     <>
       <div className="exam_result">
@@ -81,24 +91,20 @@ const App = () => {
             onSubmit={handleSubmit}
             validationSchema={validate}
           >
-            {({ values, handleChange, handleBlur, touched, errors }) => (
+            {() => (
               <Form>
                 <div className="student_number">
                   <label htmlFor="">Enter Your Register Number</label>
                   <Field
                     name="registerNumber"
+                    type="number"
                     placeholder="Enter Your Register Number"
                   />
-                  <ErrorMessage
-                    name="registerNumber"
-                    render={(msg) => (
-                      <div className="msg">
-                        *No student found with this register number
-                      </div>
-                    )}
-                  />
-
-                  <button type="submit">Submit</button>
+                  <ErrorMessage name="registerNumber" component={"div"} className="msg" />
+                  {error && <div className="msg">*No student found with this register number</div>}
+                  <button disabled={loading} type="submit">
+                    {loading ? "Loading..." : "Submit"}
+                  </button>
                 </div>
               </Form>
             )}
@@ -115,7 +121,7 @@ const App = () => {
               <div className="user_name">
                 <img src={user} alt="user_icon" />
                 <div>
-                  <h2>{userData.studentName}</h2>
+                  <h2 style={{ textTransform: "capitalize" }}>{userData.studentName}</h2>
                   <h2>{userData.registerNumber}</h2>
                 </div>
               </div>
@@ -143,9 +149,7 @@ const App = () => {
                   return (
                     <>
                       <div className="confetti">
-                        {userData.subject.every(
-                          (b) => b.theory + b.practical > 35
-                        ) ? (
+                        {userData.subject.every((b) => b.theory + b.practical > 35) ? (
                           <Confetti />
                         ) : (
                           ""
@@ -194,6 +198,7 @@ const App = () => {
 };
 
 export default App;
+
 function setWord(word: string) {
   throw new Error("Function not implemented.");
 }

@@ -36,4 +36,16 @@ h1 {
 button {
   border: none;
   outline: none;
+  transition: 300ms all linear;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
