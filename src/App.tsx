@@ -132,7 +132,7 @@ const App = () => {
                 </div>
                 <div>
                   <p>2023</p>
-                  <p>Mid-Term</p>
+                  <p>Pre Board Exam</p>
                 </div>
               </div>
             </div>
