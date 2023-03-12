@@ -149,7 +149,7 @@ const App = () => {
                   return (
                     <>
                       <div className="confetti">
-                        {userData.subject.every((b) => b.theory + b.practical >= 35) ? (
+                        {userData.subject.every((b) => b.theory >= 15) ? (
                           <Confetti numberOfPieces={100} />
                         ) : (
                           ""
@@ -164,11 +164,7 @@ const App = () => {
                         </td>
                         <td>{Number(f.theory) + Number(f.practical)}</td>
                         <td>
-                          {Number(f.theory) + Number(f.practical) >= 35 ? (
-                            <p id="pass">Pass</p>
-                          ) : (
-                            <p id="fail">Fail</p>
-                          )}
+                          {Number(f.theory) >= 15 ? <p id="pass">Pass</p> : <p id="fail">Fail</p>}
                         </td>
                       </tr>
                     </>
@@ -183,7 +179,7 @@ const App = () => {
                   }, 0)}
                   <span>({word})</span>
                 </p>
-                {userData.subject.every((b) => b.theory + b.practical >= 35) ? (
+                {userData.subject.every((b) => b.theory >= 15) ? (
                   <p id="pass">Pass</p>
                 ) : (
                   <p id="fail">Fail</p>
