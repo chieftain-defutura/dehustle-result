@@ -150,7 +150,7 @@ const App = () => {
                     <>
                       <div className="confetti">
                         {userData.subject.every((b) => b.theory + b.practical >= 35) ? (
-                          <Confetti />
+                          <Confetti numberOfPieces={100} />
                         ) : (
                           ""
                         )}
