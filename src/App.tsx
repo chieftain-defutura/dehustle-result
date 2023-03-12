@@ -65,11 +65,6 @@ const App = () => {
     const toWords = new ToWords();
     const word = toWords.convert(total);
     setWord(word);
-
-    const resu = userData.subject.every((b, acc) =>
-      b.theory + b.practical >= 35 ? console.log("Pass") : console.log("Fail")
-    );
-    console.log(resu);
   }, [userData]);
 
   useEffect(() => {
@@ -149,7 +144,9 @@ const App = () => {
                   return (
                     <>
                       <div className="confetti">
-                        {userData.subject.every((b) => b.theory >= 15) ? (
+                        {userData.subject.every(
+                          (b) => b.theory >= 15 && b.theory + b.practical >= 35
+                        ) ? (
                           <Confetti numberOfPieces={100} />
                         ) : (
                           ""
@@ -159,12 +156,16 @@ const App = () => {
                         <td>{f.subjectName}</td>
                         <td>
                           {f.theory}
-                          {f.havePractical ? "+" : ""}
+                          {f.havePractical ? "+" : null}
                           {f.practical ? f.practical : ""}
                         </td>
                         <td>{Number(f.theory) + Number(f.practical)}</td>
                         <td>
-                          {Number(f.theory) >= 15 ? <p id="pass">Pass</p> : <p id="fail">Fail</p>}
+                          {Number(f.theory) >= 15 && f.theory + f.practical >= 35 ? (
+                            <p id="pass">Pass</p>
+                          ) : (
+                            <p id="fail">Fail</p>
+                          )}
                         </td>
                       </tr>
                     </>
@@ -179,7 +180,7 @@ const App = () => {
                   }, 0)}
                   <span>({word})</span>
                 </p>
-                {userData.subject.every((b) => b.theory >= 15) ? (
+                {userData.subject.every((b) => b.theory >= 15 && b.theory + b.practical >= 35) ? (
                   <p id="pass">Pass</p>
                 ) : (
                   <p id="fail">Fail</p>
