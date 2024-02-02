@@ -126,7 +126,7 @@ const App = () => {
                   <h3>Exam</h3>
                 </div>
                 <div>
-                  <p>2023</p>
+                  <p>2023-2024</p>
                   <p>Pre Board Exam</p>
                 </div>
               </div>
