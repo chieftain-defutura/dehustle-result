@@ -1,6 +1,7 @@
 import React from "react";
 import { Document, Image, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import { IData } from "../constants/types";
+import logo from "../assets/nameboard.jpg";
 
 const styles = StyleSheet.create({
   table: {
@@ -20,6 +21,16 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 5,
     textAlign: "center",
+    color: "#fff",
+  },
+  tableBodyText: {
+    flex: 1,
+    fontSize: 12,
+    borderWidth: 0.5,
+    borderColor: "#000",
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    textAlign: "center",
   },
   tableBody: { flexDirection: "row" },
   subtext: {
@@ -29,6 +40,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
   },
+  logo: {
+    width: "100%",
+    marginBottom: 20,
+  },
 });
 
 const PdfFormat = ({ data, word }: { data: IData; word: string }) => {
@@ -36,6 +51,9 @@ const PdfFormat = ({ data, word }: { data: IData; word: string }) => {
     <Document>
       <Page size="A4">
         <View style={{ flex: 1, padding: 20 }}>
+          <View style={{ width: "100%" }}>
+            <Image source={logo} style={styles.logo} />
+          </View>
           <View style={{ flexDirection: "row", marginBottom: 10, alignItems: "center" }}>
             <Text style={styles.subtext}>Student Name: </Text>
             <Text style={styles.text}>{data.studentName}</Text>
@@ -53,7 +71,7 @@ const PdfFormat = ({ data, word }: { data: IData; word: string }) => {
             <Text style={styles.text}>Pre Board Exam</Text>
           </View>
           <View style={styles.table}>
-            <View style={[styles.tableHead, { backgroundColor: "#B4B4B3" }]}>
+            <View style={[styles.tableHead, { backgroundColor: "#000" }]}>
               <Text style={[styles.tableHeadText]}>SUBJECT</Text>
               <Text style={[styles.tableHeadText]}>THEORY</Text>
               <Text style={[styles.tableHeadText]}>PRACTICAL</Text>
@@ -62,20 +80,20 @@ const PdfFormat = ({ data, word }: { data: IData; word: string }) => {
             </View>
             {data.subject.map((s, i) => (
               <View style={styles.tableBody}>
-                <Text style={[styles.tableHeadText]}>{s.subjectName}</Text>
-                <Text style={[styles.tableHeadText]}>{s.theory}</Text>
-                <Text style={[styles.tableHeadText]}>{s.havePractical ? s.practical : ""}</Text>
-                <Text style={[styles.tableHeadText]}>{Number(s.theory) + Number(s.practical)}</Text>
+                <Text style={[styles.tableBodyText]}>{s.subjectName}</Text>
+                <Text style={[styles.tableBodyText]}>{s.theory}</Text>
+                <Text style={[styles.tableBodyText]}>{s.havePractical ? s.practical : ""}</Text>
+                <Text style={[styles.tableBodyText]}>{Number(s.theory) + Number(s.practical)}</Text>
 
                 {Number(s.theory) >= 15 && s.theory + s.practical >= 35 ? (
-                  <Text style={[styles.tableHeadText, { color: "green" }]}> Pass</Text>
+                  <Text style={[styles.tableBodyText, { color: "green" }]}> Pass</Text>
                 ) : (
-                  <Text style={[styles.tableHeadText, { color: "tomato" }]}>Fail</Text>
+                  <Text style={[styles.tableBodyText, { color: "tomato" }]}>Fail</Text>
                 )}
               </View>
             ))}
           </View>
-          <View style={[styles.tableHead, { backgroundColor: "#B4B4B3" }]}>
+          <View style={[styles.tableHead, { backgroundColor: "#000" }]}>
             <Text style={[styles.tableHeadText]}>Total</Text>
             <Text style={[styles.tableHeadText]}></Text>
             <Text style={[styles.tableHeadText]}></Text>
