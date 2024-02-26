@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^3.3.8",
     "axios": "^1.3.4",
     "formik": "^2.2.9",
     "number-to-words": "^1.2.4",
